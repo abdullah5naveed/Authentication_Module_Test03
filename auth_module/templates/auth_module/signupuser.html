@@ -1,0 +1,16 @@
+
+
+
+<h1>Signup User Page...</h1>
+
+
+    {{error}}
+
+<form method="POST">
+    
+    {% csrf_token %}
+    {{signupform.as_p}}
+    <button type="submit">Signup</button>
+
+
+</form>

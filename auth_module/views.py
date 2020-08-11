@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import login, authenticate
 
 from django.contrib.auth.models import User
 from django.db import IntegrityError
@@ -28,4 +28,17 @@ def signupuser(request):
         else:
             signupuserData = {'signupform':UserCreationForm, 'error':"Both Passwords must be same"}
             return render(request, 'auth_module/signupuser.html', signupuserData)
-        
+
+
+def loginuser(request):
+    if request.method == 'GET':
+        loginuserData = {'loginform':AuthenticationForm}
+        return render(request, 'auth_module/loginuser.html', loginuserData)
+    else:
+        user = authenticate(username = request.POST['username'], password = request.POST['password'])
+        if user is None:
+            loginuserData = {'loginform':AuthenticationForm, 'error':"Incorrect username or Password"}
+            return render(request, 'auth_module/loginuser.html', loginuserData)
+        else:
+            login(request, user)
+            return redirect('home')

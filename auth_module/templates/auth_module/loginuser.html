@@ -1,0 +1,15 @@
+
+
+<h1>Login Page....</h1>
+<br>
+
+{{error}}
+
+<form method="POST">
+
+    {% csrf_token %}
+    {{loginform.as_p}}
+    <button type="submit">Login</button>
+
+</form>
+
